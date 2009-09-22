@@ -1,0 +1,7 @@
+L:=$(GET_LOCAL_DIR)
+
+include $(L)/Util/mk \
+	$(L)/VM/mk \
+	$(L)/Arch/i386/mk
+
+include make/kernel.mk

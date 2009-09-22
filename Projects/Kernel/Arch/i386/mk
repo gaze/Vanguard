@@ -1,0 +1,20 @@
+L:=$(GET_LOCAL_DIR)
+
+OBJ += \
+	$(L)/Main.o \
+	$(L)/Hat.o \
+	$(L)/Head.o \
+	$(L)/IntelConsole.o
+
+CC=gcc
+LD=ld
+AS=as
+
+CFLAGS=-ffreestanding
+
+LINKSCRIPT=$(L)/kernel.ld
+KERNEL=$(L)/kernel.bin
+FLOPPY=$(L)/floppy.img
+
+$(BUILD_DIR)/$(FLOPPY) : $(BUILD_DIR)/$(KERNEL)
+	./SCAFFOLD/mkfloppy.sh $(BUILD_DIR)/$(FLOPPY) $(BUILD_DIR)/$(KERNEL) SCAFFOLD/stage1 SCAFFOLD/stage2

@@ -1,0 +1,22 @@
+                                            _ 
+__   ____ _ _ __   __ _ _   _  __ _ _ __ __| |
+\ \ / / _` | '_ \ / _` | | | |/ _` | '__/ _` |
+ \ V / (_| | | | | (_| | |_| | (_| | | | (_| |
+  \_/ \__,_|_| |_|\__, |\__,_|\__,_|_|  \__,_|
+                  |___/                       
+
+Vanguard is a small hobby operating system.
+
+
+building
+-----------
+
+The only tool required for a kernel binary is the GNU
+toolchain. For making a floppy image, mtools and grub
+are required.
+
+To build, in the main directory just type make.  A floppy
+image will be built
+
+Note, this will not work under the OS X toolchain.
+The GNU linker is required.

@@ -1,0 +1,4 @@
+L:=$(GET_LOCAL_DIR)
+
+OBJ:=
+include $(L)/Kernel/mk

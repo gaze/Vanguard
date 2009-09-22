@@ -1,0 +1,4 @@
+This directory just contains random crap to hold up a running
+OS while more functionality that I feel like implementing is
+being implemented. Mostly this just includes grub stuff that
+can't be part of the distribution due to GPL issues.

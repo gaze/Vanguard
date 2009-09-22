@@ -1,0 +1,4 @@
+boot: floppy
+floppya: 1_44="./build/Projects/Kernel/Arch/i386/floppy.img", status=inserted
+
+vgaromimage: /usr/share/vgabios/vgabios.bin
