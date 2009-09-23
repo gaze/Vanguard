@@ -44,7 +44,12 @@ static void NextTabStop(){
 		Newline();
 }
 
-static int Putc(char c){
+static int Putchar(char c){
+	switch(c){
+	case '\n': Newline(); return;
+	case '\t': NextTabStop(); return;
+	}
+
 	CHAR(row,column) = c;	
 	COLOR(row,column) = 0x07;
 	if(column++ > WIDTH){
@@ -52,19 +57,8 @@ static int Putc(char c){
 	}
 }
 
-static int Puts(char *str){
-	while(*str != '\0'){
-		switch(*str){
-		case '\n': Newline(); break;
-		case '\t': NextTabStop(); break;
-		default: Putc(*str); break;
-		}
-		str++;
-	}
-}
-
 static const struct ConsoleOps intelConsoleOps = {
-	.Puts = Puts,
+	.Putchar = Putchar,
 };
 
 void cls(){

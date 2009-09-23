@@ -28,9 +28,9 @@
         .data
 
 
-        .text
 
         /* Multiboot header.  */
+.section ".mbhdr"
 multiboot_header:
         /* magic */
         .long   MULTIBOOT_HEADER_MAGIC
@@ -42,6 +42,7 @@ multiboot_header:
         .globl  start, _start
 
         /* Align 32 bits boundary.  */
+        .text
         .align  4
         
 start:

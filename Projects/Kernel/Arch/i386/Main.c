@@ -24,11 +24,13 @@
 */
 
 #include <Kernel/Console.h>
+#include <stdio.h>
 
 void IntelConsoleInit();
 
 int Init386()
 {
    IntelConsoleInit();
-   ConsolePuts("Vanguard x86\n");
+   printf("Vanguard x86\n");
+   I386HatInit();
 }

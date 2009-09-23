@@ -6,6 +6,7 @@ SECTIONS
 {   
     .text virt + phys : AT(phys)
     {   code = .;
+	*(.mbhdr)
         *(.text)
         . = ALIGN(4096); 
     }

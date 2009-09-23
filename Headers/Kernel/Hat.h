@@ -6,16 +6,18 @@
 #ifndef _KERNEL_HAT_H
 #define _KERNEL_HAT_H
 
-#include <sys/types.h>
+#include <OS/Types.h>
+#include <Arch/Hat.h>
 
-// hat_t is an opaque handle
-typedef void * hHat;
+typedef struct Hat *hHat;
 
-struct HatOps {
-	hHat (*HatNew)(bool);
-	void (*HatFree)(hHat);
-	void * (*AllocEarly)();
-	void (*HatBoot)();
-	void (*HatActivate)();
-};
+/*
+ * The HAT API
+ */
+hHat HatNew();
+void HatFree(hHat);
+void HatActivate(hHat);
+
+void * AllocEarly();
+
 #endif

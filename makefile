@@ -6,9 +6,11 @@ NOECHO=@
 LIBGCC_PATH := $(dir $(shell $(CC) $(GLOBAL_CFLAGS) -print-libgcc-file-name))
 LIBGCC := -lgcc
 
-INCLUDES= -I./Headers
+INCLUDES= -I./Headers -I./Headers/archs/i386
 
 BUILD_DIR=build
+
+Q=@
 
 
 include Projects/mk
