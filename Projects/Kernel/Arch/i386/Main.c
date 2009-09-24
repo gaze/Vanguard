@@ -26,11 +26,22 @@
 #include <Kernel/Console.h>
 #include <stdio.h>
 
+/* Grub multiboot header */
+#include "multiboot.h"
+
 void IntelConsoleInit();
 
-int Init386()
+int Init386(u32 mb_info, u32 mb_magic)
 {
+
+	struct grub_multiboot_info *mbi = (struct grub_multiboot_info *)(mb_info);
+
    IntelConsoleInit();
    printf("Vanguard x86\n");
+
+	printf("mb_magic: %x\n", mb_magic);
+	printf("mbi: %x\n", mbi);
+
+
    I386HatInit();
 }

@@ -30,6 +30,7 @@
 
 
         /* Multiboot header.  */
+        .text
 .section ".mbhdr"
 multiboot_header:
         /* magic */
@@ -42,13 +43,14 @@ multiboot_header:
         .globl  start, _start
 
         /* Align 32 bits boundary.  */
-        .text
         .align  4
         
 start:
 _start:
 
         /* PAGE TABLE */
+
+	mov %eax, %edx
         
         /* Page directory is 1024 big */
         mov $0x400, %ecx
@@ -90,8 +92,12 @@ pd_fill:
         jmp *%ecx
 
 higherhalf:
-        push %ebx
+	mov stack+4096, %esp
+	push %edx
+	push %ebx
         call Init386
         
 safety_net:
 				jmp safety_net
+
+	.comm stack, 4096
