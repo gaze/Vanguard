@@ -6,12 +6,18 @@
 #define _KERNEL_VMPAGE_H
 
 #include <OS/Types.h>
+#include <Kernel/Queue.h>
 
-typedef struct VMPage_s {
-	TAILQ_ENTRY(VMPage_s) Pageq;
+typedef struct VMPage {
+	TAILQ_ENTRY(VMPage) Pageq;
 	PAddr Phys;
 	VAddr Offset; // Offset into the VMO
 } VMPage;
+
+#define VMPAGE_LONE ((VAddr)0)
+
+void VMPagePrintStats();
+void * VMPageAddFree(void * base, PAddr freeBegin, PAddr freeEnd);
 
 
 #endif

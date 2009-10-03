@@ -16,7 +16,7 @@ typedef unsigned char u8;
 
 typedef u8 bool;
 
-/* Defined PER MACHINE!!! */
+/* Should be defined PER MACHINE!!! */
 typedef u32 PAddr;
 typedef u32 VAddr;
 

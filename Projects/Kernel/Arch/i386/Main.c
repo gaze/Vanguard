@@ -3,27 +3,8 @@
  * Distributed under the terms of the Vanguard License.
  */
 
-/*
-	 Nearly everything is statically allocated near the beginning.
-	 Anything that is provisional to the kernel starting up, but
-	 can be freed later on is put in a page aligned linker section
-	 called "discardable", which after booting is freed to the free
-	 page queues and left mappable. The only thing that's dynamically
-	 allocated after kernel startup are the vm_page structs to track
-	 memory. Post boot vm looks like this
-
-	                       V Kernel    V Kernel break
-         +---------------------------------------------+
-	 |                     |     |     |           |
-	 +---------------------------------------------+
-                               ^ vm_pages
-
-         The kernel break is set directly after the kernel, and we extend
-	 the break for vm_pages. To do this, the first thing we do is
-	 get the hat started asap
-*/
-
-#include <Kernel/Console.h>
+#include <Kernel/Kernel.h>
+#include <Kernel/VMPage.h>
 #include <stdio.h>
 
 /* Grub multiboot header */
@@ -31,17 +12,52 @@
 
 void IntelConsoleInit();
 
+/* Throw this somewhere */
+#define alloca(x) __builtin_alloca(x)
+
+extern void* end;
+
 int Init386(u32 mb_info, u32 mb_magic)
 {
 
-	struct grub_multiboot_info *mbi = (struct grub_multiboot_info *)(mb_info);
+   struct grub_multiboot_info *mbi = (struct grub_multiboot_info *)(mb_info);
+   void *kbreak = end;
 
-   IntelConsoleInit();
+   IntelConsoleInit();   
+   
+   if(mb_magic != 0x2badb002){
+      panic("Kernel loaded by non-multiboot compliant bootloader!\n");
+   }
+
    printf("Vanguard x86\n");
+   
+   {
+      struct grub_multiboot_mmap_entry *ent 
+         = (struct grub_multiboot_mmap_entry *)mbi->mmap_addr;
+      
+      for(; ent < (struct grub_multiboot_mmap_entry *)
+         (mbi->mmap_addr + mbi->mmap_length);
+         ent = (struct grub_multiboot_mmap_entry *)
+            ((u32) ent + ent->size + sizeof(ent->size))){
 
-	printf("mb_magic: %x\n", mb_magic);
-	printf("mbi: %x\n", mbi);
+         if(ent->type == GRUB_MULTIBOOT_MEMORY_RESERVED)
+            continue;
 
+         u32 sectBase, sectEnd;
+
+         /* XXX Will be fucked if handed a 64-bit addr by grub,
+                    this truncates */
+
+         sectBase = ent->addr;
+         sectEnd = ent->addr+ent->len;
+
+         kbreak = VMPageAddFree(kbreak, sectBase, sectEnd);
+      }
+   }
+
+   VMPagePrintStats();
 
    I386HatInit();
+
+   panic("End.\n");
 }

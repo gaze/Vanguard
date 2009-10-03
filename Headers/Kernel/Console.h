@@ -11,8 +11,8 @@ struct ConsoleOps {
 };
 
 /* We only currently support one logger. */
-int ConsoleAdd (struct ConsoleOps *);
-int ConsolePuts (char *);
-int ConsolePutchar (char);
+void ConsoleAdd (struct ConsoleOps *);
+void ConsolePuts (char *);
+void ConsolePutchar (char);
 
 #endif

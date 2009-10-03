@@ -10,7 +10,7 @@ CC=gcc
 LD=ld
 AS=as
 
-CFLAGS=-ffreestanding -fno-stack-protector
+CFLAGS=-ffreestanding -fno-stack-protector -Wall
 
 LINKSCRIPT=$(L)/kernel.ld
 KERNEL=$(L)/kernel.bin

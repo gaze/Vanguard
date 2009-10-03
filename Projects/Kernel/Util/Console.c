@@ -14,18 +14,18 @@
 
 static struct ConsoleOps *console;
 
-int ConsolePuts(char *str){
+void ConsolePuts(char *str){
 	while(*str != '\0'){
 		console->Putchar(*str);
 		str++;
 	}
 }
 
-int ConsolePutchar(char c){
+void ConsolePutchar(char c){
 	console->Putchar(c);
 }
 
-int ConsoleAdd(struct ConsoleOps * new){
+void ConsoleAdd(struct ConsoleOps * new){
 	console = new;
 }
 
