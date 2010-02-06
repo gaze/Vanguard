@@ -15,6 +15,7 @@ void IntelConsoleInit();
 /* Throw this somewhere */
 #define alloca(x) __builtin_alloca(x)
 
+extern void* code;
 extern void* end;
 
 int Init386(u32 mb_info, u32 mb_magic)
@@ -30,7 +31,7 @@ int Init386(u32 mb_info, u32 mb_magic)
    }
 
    printf("Vanguard x86\n");
-   
+
    {
       struct grub_multiboot_mmap_entry *ent 
          = (struct grub_multiboot_mmap_entry *)mbi->mmap_addr;
@@ -58,6 +59,12 @@ int Init386(u32 mb_info, u32 mb_magic)
    VMPagePrintStats();
 
    I386HatInit();
+
+
+   /* Code - kbreak is used by kernel and page frame data structures
+    * everything else beyond that is fair game.
+    */
+   VMMapStartup(code, kbreak, 0xFFFFFFFF);
 
    panic("End.\n");
 }

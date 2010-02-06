@@ -43,4 +43,6 @@ typedef u32 uintptr_t;
 
 typedef s32 ptrdiff_t;
 
+typedef u32 Size;
+
 #endif
